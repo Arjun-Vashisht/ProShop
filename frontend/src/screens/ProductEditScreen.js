@@ -8,7 +8,9 @@ import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { listProductDetails, updateProduct } from '../actions/productActions'
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
-
+const api = axios.create({
+    baseURL: 'https://lazy-plum-piglet-wear.cyclic.app',
+  });
 const ProductEditScreen = () => {
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
@@ -64,7 +66,7 @@ const ProductEditScreen = () => {
                 }
             }
 
-            const { data } = await axios.post('/api/upload', formData, config)
+            const { data } = await api.post('/api/upload', formData, config)
             setImage(data)
             setUploading(false)
         } catch (error) {

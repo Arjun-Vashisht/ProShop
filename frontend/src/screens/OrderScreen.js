@@ -8,7 +8,9 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getOrderDetails, payOrder, deliverOrder } from '../actions/orderActions'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants'
-
+const api = axios.create({
+    baseURL: 'https://lazy-plum-piglet-wear.cyclic.app',
+  });
 const OrderScreen = () => {
     const { id } = useParams() 
     const orderId = id 
@@ -36,7 +38,7 @@ const OrderScreen = () => {
     acc + item.price * item.qty, 0))}
     useEffect(()=>{
         const addPayPalScript = async () => {
-            const { data: clientId } = await axios.get('/api/config/paypal')
+            const { data: clientId } = await api.get('/api/config/paypal')
             // console.log(clientId) 
             const script = document.createElement('script')
             script.type = 'text/javascript'
