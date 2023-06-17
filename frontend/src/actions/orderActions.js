@@ -17,7 +17,9 @@ import { ORDER_CREATE_REQUEST,
     ORDER_DELIVER_SUCCESS,
     ORDER_DELIVER_FAIL} from "../constants/orderConstants";
 import axios from 'axios'
-
+const api = axios.create({
+    baseURL: 'https://lazy-plum-piglet-wear.cyclic.app',
+  });
     export const createOrder = (order) => async (dispatch, getState) => {
         try {
             dispatch({
@@ -33,7 +35,7 @@ import axios from 'axios'
                 }, 
             }
     
-            const { data } = await axios.post(`/api/orders`, order, config)
+            const { data } = await api.post(`/api/orders`, order, config)
     
             dispatch({
                 type: ORDER_CREATE_SUCCESS,
@@ -65,7 +67,7 @@ import axios from 'axios'
                 }, 
             }
     
-            const { data } = await axios.get(`/api/orders/${id}`, config)
+            const { data } = await api.get(`/api/orders/${id}`, config)
     
             dispatch({
                 type: ORDER_DETAILS_SUCCESS,
@@ -97,7 +99,7 @@ import axios from 'axios'
                 }, 
             }
     
-            const { data } = await axios.put(`/api/orders/${orderId}/pay`, paymentResult, config)
+            const { data } = await api.put(`/api/orders/${orderId}/pay`, paymentResult, config)
     
             dispatch({
                 type: ORDER_PAY_SUCCESS,
@@ -128,7 +130,7 @@ import axios from 'axios'
                 }, 
             }
     
-            const { data } = await axios.put(`/api/orders/${order._id}/deliver`, {}, config)
+            const { data } = await api.put(`/api/orders/${order._id}/deliver`, {}, config)
     
             dispatch({
                 type: ORDER_DELIVER_SUCCESS, 
@@ -160,7 +162,7 @@ import axios from 'axios'
                 }, 
             }
     
-            const { data } = await axios.get(`/api/orders/myorders`, config)
+            const { data } = await api.get(`/api/orders/myorders`, config)
     
             dispatch({
                 type: ORDER_LIST_MY_SUCCESS,
@@ -191,7 +193,7 @@ import axios from 'axios'
                 }, 
             }
             
-            const { data } = await axios.get(`/api/orders`, config)
+            const { data } = await api.get(`/api/orders`, config)
     
             dispatch({
                 type: ORDER_LIST_SUCCESS,

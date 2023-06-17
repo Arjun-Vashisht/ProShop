@@ -26,7 +26,9 @@ import {
 } from "../constants/userConstants"
 import axios from 'axios'
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants"
-
+const api = axios.create({
+    baseURL: 'https://lazy-plum-piglet-wear.cyclic.app',
+  });
 export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({
@@ -39,7 +41,7 @@ export const login = (email, password) => async (dispatch) => {
             }, 
         }
 
-        const { data } = await axios.post('/api/users/login', { email, password}, config)
+        const { data } = await api.post('/api/users/login', { email, password}, config)
 
         dispatch({
             type: USER_LOGIN_SUCCESS,
@@ -80,7 +82,7 @@ export const register = (name, email, password) => async (dispatch) => {
             }, 
         }
 
-        const { data } = await axios.post('/api/users', { name, email, password}, config)
+        const { data } = await api.post('/api/users', { name, email, password}, config)
 
         dispatch({
             type: USER_REGISTER_SUCCESS,
@@ -119,7 +121,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
             }, 
         }
 
-        const { data } = await axios.get(`/api/users/${id}`, config)
+        const { data } = await api.get(`/api/users/${id}`, config)
 
         dispatch({
             type: USER_DETAILS_SUCCESS,
@@ -151,7 +153,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             }, 
         }
 
-        const { data } = await axios.put(`/api/users/profile`, user, config)
+        const { data } = await api.put(`/api/users/profile`, user, config)
 
         dispatch({
             type: USER_UPDATE_PROFILE_SUCCESS,
@@ -182,7 +184,7 @@ export const listUsers = () => async (dispatch, getState) => {
             }, 
         }
 
-        const { data } = await axios.get(`/api/users`, config)
+        const { data } = await api.get(`/api/users`, config)
 
         dispatch({
             type: USER_LIST_SUCCESS,
@@ -213,7 +215,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
             }, 
         }
 
-        await axios.delete(`/api/users/${id}`, config)
+        await api.delete(`/api/users/${id}`, config)
 
         dispatch({
             type: USER_DELETE_SUCCESS,
@@ -244,7 +246,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
             }, 
         }
 
-        const { data } = await axios.put(`/api/users/${user._id}`, user, config)
+        const { data } = await api.put(`/api/users/${user._id}`, user, config)
 
         dispatch({
             type: USER_UPDATE_SUCCESS,
